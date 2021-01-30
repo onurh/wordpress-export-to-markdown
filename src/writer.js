@@ -185,7 +185,7 @@ function getPostPath(post, config) {
 	if (config.postFolders) {
 		pathSegments.push(slugFragment, 'index.md');
 	} else {
-		pathSegments.push(slugFragment + '.md');
+		pathSegments.push(post.frontmatter.categories[0], slugFragment + '.md');
 	}
 
 	return path.join(...pathSegments);

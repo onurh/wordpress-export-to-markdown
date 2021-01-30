@@ -67,9 +67,11 @@ function collectPosts(data, config) {
 				},
 				frontmatter: {
 					title: getPostTitle(post),
+					slug: getPostSlug(post),
 					date: getPostDate(post),
 					categories: getCategories(post),
-					tags: getTags(post)
+					tags: getTags(post),
+					no: getVerino(post),
 				},
 				content: translator.getPostContent(post, turndownService, config)
 			}));
@@ -128,6 +130,16 @@ function getCategories(post) {
 
 function getTags(post) {
 	return processCategoryTags(post, 'post_tag');
+}
+
+function getVerino(post) {
+	if (post.postmeta === undefined) {
+		return undefined;
+	}
+
+	const postmeta = post.postmeta.find(postmeta => postmeta.meta_key[0] === 'verino');
+	const id = postmeta ? postmeta.meta_value[0] : undefined;
+	return id;
 }
 
 function processCategoryTags(post, domain) {
